@@ -13,6 +13,8 @@ import java.util.regex.Pattern;
 
 
 public class Lexer {
+	
+	//tokens will be stored in an arraylist. tokens consist of type and data
 	ArrayList <Token> tokens;
 /*
  * This section of the program is going to be functions that verify if the tokens are of a 
@@ -31,58 +33,85 @@ public class Lexer {
 	//the patterns take in regular expressions and then work with them. I am using the drfinitions 
 	//from the lexical specifications. 
 	private static final String KEYWORDS_PATTERN = "\\b if \\b | \\b then \\b | \\b else \\b | \\b for \\b| \\b integer \\b | \\b class \\b | \\b float \\b | \\b read \\b | \\b return \\b| \\b write \\b | \\b main \\b"; 
-	private static final String LETTER_PATTERN ="[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]|[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]]" ;
+	private static final String LETTER_PATTERN ="[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]|[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]" ;
 	private static final String DIGIT_PATTERN = "[0,1,2,3,4,5,6,7,8,9]";
 	private static final String NONZERO_PATTERN = "[1,2,3,4,5,6,7,8,9]";
-	
+	private static final String ALPHANUM_PATTERN = "[0,1,2,3,4,5,6,7,8,9]|[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]|[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]|_";
 	//create the pattern objects for the set patterns:
 	Pattern keywords = Pattern.compile(KEYWORDS_PATTERN);
 	Pattern letter = Pattern.compile(LETTER_PATTERN);
 	Pattern digit = Pattern.compile(DIGIT_PATTERN);
 	Pattern nonzero = Pattern.compile(NONZERO_PATTERN);
-	
+	Pattern alphanum = Pattern.compile(ALPHANUM_PATTERN);
 	//now that we have the most used pattern that are used as subunits in all other aspects of the
 	//lexer we will be able to use the matcher to see if it corresponds to their token definition
 	
-	
 //ids if is a keyword token
-public boolean isKeyword(){
+	/*
+	 * The input is a string which is the sequence to analyse. if the sequence of char 
+	 * is a keyword it will return true. 
+	 * */
+public boolean isKeyword(String key){
 	boolean result=false;
-	
-	
+	Matcher keywords_match = keywords.matcher(key);
+	result = keywords_match.matches();
 	return result;
 }
 //ids if is a letter token
-public boolean isLetter(){
+public boolean isLetter(String input){
 boolean result=false;
-	
-	
+	Matcher letter_match = letter.matcher(input);
+	result = letter_match.matches();	
 	return result;
 }
 //ids if is a digit token
-public boolean isDigit(){
+public boolean isDigit(String input){
 boolean result=false;
 	
-	
+	Matcher digit_match = digit.matcher(input);
+	result = digit_match.matches();
 	return result;
 }
 //ids if is a nonzero
-public boolean isNonzero(){
+public boolean isNonzero(String input){
 boolean result=false;
-	
-	
+	Matcher nonzero_match = nonzero.matcher(input);
+	result = nonzero_match.matches();
 	return result;
 }
 
 //ids if is a ID
-public boolean isID(){
+//ID requires a little more work. 
+public boolean isID(String input){
 boolean result=false;
+	int length = input.length();
+	
+	//verify the first char of the input is a letter if not result is false and all other processes stop
+	if(isLetter(input.valueOf((input.charAt(0))))==false) {
+		
+		result = false;
+	}
+	//in the case that the result from the first char is that it is a letter
+	else {
+		for (int i=1;i<= length;i++) {
+			String character = input.valueOf(input.charAt(i));
+			
+			if(isAlphanum(character)==false)
+			{
+				return result = false; //exit function and return false not an id
+			}
+			
+			
+		}//as we exited the loop it means all remaining char are alphanum. input is an id
+		result = true;
+		
+	}
 	
 	
 	return result;
 }
 //ids if is an integer
-public boolean isinteger(){
+public boolean isinteger(String input){
 boolean result=false;
 	
 	
@@ -90,7 +119,7 @@ boolean result=false;
 }
 
 //ids if is a fraction
-public boolean isFraction(){
+public boolean isFraction(String input){
 boolean result=false;
 	
 	
@@ -98,7 +127,7 @@ boolean result=false;
 }
 
 //ids if is a float
-public boolean isFloat(){
+public boolean isFloat(String input){
 boolean result=false;
 	
 	
@@ -106,15 +135,15 @@ boolean result=false;
 }
 
 //ids if is an alphanum
-public boolean isAlphanum(){
+public boolean isAlphanum(String input){
 boolean result=false;
-	
-	
+	Matcher alphanum_match = alphanum.matcher(input);
+	result = alphanum_match.matches();	
 	return result;
 }
 
 //ids if is an operator
-public boolean isOperator(){
+public boolean isOperator(String input){
 boolean result=false;
 	
 	
@@ -122,7 +151,7 @@ boolean result=false;
 }
 
 //ids if is a punctuation
-public boolean isPunctuation(){
+public boolean isPunctuation(String input){
 boolean result=false;
 	
 	
@@ -130,7 +159,7 @@ boolean result=false;
 }
 
 //if if comment
-public boolean isComment() {
+public boolean isComment(String input) {
 boolean result=false;
 	
 	
@@ -141,7 +170,7 @@ boolean result=false;
 
 /*
  * a class to create the tokens. Tokens will have a type and a data associated to it. 
- * 
+ * they are going to be used in the parent class in order to tokenize the input.
  * */
 
 public class Token{
