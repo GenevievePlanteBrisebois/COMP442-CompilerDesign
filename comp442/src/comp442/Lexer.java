@@ -6,7 +6,6 @@
 
 package comp442;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -111,7 +110,7 @@ boolean result=false;
 	return result;
 }
 //ids if is an integer
-public boolean isinteger(String input){
+public boolean isInteger(String input){
 	boolean result=false;
 	int length = input.length();
 	String character;
@@ -141,6 +140,10 @@ public boolean isFraction(String input){
 		if(i==0 && character != ".") {
 			return result;			
 		}
+		else if (input == ".0") {
+			result = true;
+			return result;
+		}
 		//checking if the chars between 1and before last are digits
 		else if (i>0 && i<length-1 && isDigit(character)==false) {
 			return result;
@@ -158,8 +161,77 @@ public boolean isFraction(String input){
 
 //ids if is a float
 public boolean isFloat(String input){
-boolean result=false;
+	boolean result=false;
+	int length = input.length();
+	String character;
+	//most simple test, looks at if its an integer 
+	//(which takes into account the digits). if it is it is not a float
+	//makes us skip the big process if it is already not a float
+	if(isInteger(input)==true) {
+		return result;
+	}
+	//find where the . is and break the string into two new strings
+	//also test if there are multiple . and or e (which makes the string invalid)
+	int dot = 0;
+	int e = 0;
+	for (int i=0;i<length;i++) {
+		character =  input.valueOf(input.charAt(i));
+		if(character =="." && dot ==0 ) {
+			dot =i;
+			
+			
+		}
+		else if (character == "." && dot !=0)
+			return result;
+		else if (character == "e" && e!=0)
+			return result;		
+		else if (character =="e" && e==0)
+			e = i;
+	}
+		
+	//now we have the index of the dot we can create the two strings
 	
+	String part1 = "";
+	String part2 = "";
+	
+	for (int i=0;i<dot;i++) {
+		character =  input.valueOf(input.charAt(i));
+		part1+=character;
+	}
+	for (int i=dot;i<length;i++) {
+		character =  input.valueOf(input.charAt(i));
+		part2+=character;
+	}
+	
+	//verify if the part1 is an integer
+	if(isInteger(part1)==false)
+		return result;
+	
+	if (e==0) {
+		if(isFraction(part2)==false)
+			return result;		
+	}else if (e!=0) {
+		//make a part 3
+		
+		String part3 ="";
+		
+		for (int i=dot;i<e;i++) {
+			character =  input.valueOf(input.charAt(i));
+			part2+=character;
+		}
+		for (int i=e+1;i<length;i++) {
+			character =  input.valueOf(input.charAt(i));
+			part3+=character;
+		}
+		
+		if(isFraction(part2)==false)
+			return result;
+		if(isInteger(part3)==false)
+			return result;
+		
+	}
+	//still need to implement variation for the +- in the second section of the implementation. 
+	result = true;	
 	
 	return result;
 }
@@ -255,6 +327,14 @@ public boolean isCommentLine(String input) {
 	return result;
 	
 }
+
+/*
+ * now that we have the modules for the regular expressions we can look into gathering the input bits and 
+ * using the modules we created according to the lexical specification in order to do the tokenization.
+ * */
+
+
+
 
 
 
