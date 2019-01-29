@@ -112,17 +112,47 @@ boolean result=false;
 }
 //ids if is an integer
 public boolean isinteger(String input){
-boolean result=false;
-	
-	
+	boolean result=false;
+	int length = input.length();
+	String character;
+	for (int i=0;i<length;i++) {
+		character = input.valueOf(input.charAt(i));
+		
+		//case first is not a non zero digit
+		if(i==0 && isNonzero(character)==false) {
+			return result;	
+		}else if (i>0 && isDigit(character)==false) {
+			return result;
+		}	
+	}
+	//as we exite the loop of status verification the input is a integer
+	result = true;	
 	return result;
 }
 
 //ids if is a fraction
 public boolean isFraction(String input){
-boolean result=false;
+	boolean result=false;
+	int length = input.length();
+	String character;
 	
-	
+	for (int i=0;i<length;i++) {
+		character =  input.valueOf(input.charAt(i));
+		if(i==0 && character != ".") {
+			return result;			
+		}
+		//checking if the chars between 1and before last are digits
+		else if (i>0 && i<length-1 && isDigit(character)==false) {
+			return result;
+		}
+		//checking if the last char is a nonzero
+		else if(i==length-1 && isNonzero(character)==false) {
+			return result;
+		}
+		
+	}
+	//verification loop done and passed
+	result = true;
 	return result;
 }
 
@@ -144,26 +174,86 @@ boolean result=false;
 
 //ids if is an operator
 public boolean isOperator(String input){
-boolean result=false;
+	boolean result=false;
+	int length = input.length();
 	
+	//no operator has more than 2 char so immediately if length is >2 its not an operator or at least not a valid one
+	if(length>2)
+		return result;
 	
+	//now cheching the other factors i.e.the operator symbols. as it is a short list we will do a big if with not equal
+	else if(input != "==" || input !="<>" || input !="<" || input !=">" || input !="<=" || input !=">=" || input !="+" || input !="-" || input !="*"||input !="/"||input !="="|| input !="&&" || input !="||"||input !="!") {
+		return result;
+	}
+	//if we are still in the function it passed the test return true
+	result =true;	
 	return result;
 }
 
 //ids if is a punctuation
 public boolean isPunctuation(String input){
-boolean result=false;
+	boolean result=false;
+	int length = input.length();
+	String character;
 	
-	
+	//no punctuation is longer than 2 so if length >2
+	if (length >2)
+		return result;
+	//make an exhaustive list of the punctuation markers
+	else if(input !=";"||input !=":"||input !="::"||input !="."||input !=","||input !="("||input !=")"||input !="["||input !="]"||input !="{"||input !="}") {
+	return result;
+	}
+	//if still in function we passed the test
+	result = true;	
 	return result;
 }
 
-//if if comment
-public boolean isComment(String input) {
+/*for the comments there are two possible functions. if the start of a comment block has been found then
+ * the program will have to look for the closing block symbol. it will allow it to know when a
+ * block opens or closes or if it is just a line of comment (//)
+ * 
+ * */
+public boolean isCommentBlockOpen(String input) {
 boolean result=false;
+	int length = input.length();
 	
+	if(length!=2)
+		return result;
+	else if (input!="/*")
+		return result;
 	
+	//as we passed the test comment section has started or ended
+	result =true;
 	return result;
+}
+
+public boolean isCommentBlockClosed(String input) {
+boolean result=false;
+	int length = input.length();
+	
+	if(length!=2)
+		return result;
+	else if (input !="*/")
+		return result;
+	
+	//as we passed the test comment section has started or ended
+	result =true;
+	return result;
+}
+
+public boolean isCommentLine(String input) {
+	boolean result=false;
+	int length = input.length();
+	
+	if(length!=2)
+		return result;
+	else if (input !="//")
+		return result;
+	
+	//as we passed the test comment section has started or ended
+	result =true;
+	return result;
+	
 }
 
 
