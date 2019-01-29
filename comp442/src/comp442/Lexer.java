@@ -30,14 +30,19 @@ public class Lexer {
 	//strings that will be used to create the patterns. the patterns will be used in the functions. 
 	//the patterns take in regular expressions and then work with them. I am using the drfinitions 
 	//from the lexical specifications. 
-	private static final String KEYWORDS = "\\b if \\b | \\b then \\b | \\b else \\b | \\b for \\b| \\b integer \\b | \\b class \\b | \\b float \\b | \\b read \\b | \\b return \\b| \\b write \\b | \\b main \\b"; 
-	private static final String PUNCTUATION = "";
-	private static final String COMMENT = "";
-	private static final String OPERATORS = "";
-	private static final String LETTER ="[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]|[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]]" ;
-	private static final String DIGIT = "[0,1,2,3,4,5,6,7,8,9]";
-	private static final String NONZERO = "[1,2,3,4,5,6,7,8,9]";
+	private static final String KEYWORDS_PATTERN = "\\b if \\b | \\b then \\b | \\b else \\b | \\b for \\b| \\b integer \\b | \\b class \\b | \\b float \\b | \\b read \\b | \\b return \\b| \\b write \\b | \\b main \\b"; 
+	private static final String LETTER_PATTERN ="[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]|[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]]" ;
+	private static final String DIGIT_PATTERN = "[0,1,2,3,4,5,6,7,8,9]";
+	private static final String NONZERO_PATTERN = "[1,2,3,4,5,6,7,8,9]";
 	
+	//create the pattern objects for the set patterns:
+	Pattern keywords = Pattern.compile(KEYWORDS_PATTERN);
+	Pattern letter = Pattern.compile(LETTER_PATTERN);
+	Pattern digit = Pattern.compile(DIGIT_PATTERN);
+	Pattern nonzero = Pattern.compile(NONZERO_PATTERN);
+	
+	//now that we have the most used pattern that are used as subunits in all other aspects of the
+	//lexer we will be able to use the matcher to see if it corresponds to their token definition
 	
 	
 //ids if is a keyword token
@@ -154,6 +159,18 @@ public class Token{
 		data =d;
 	}
 	
+	public String getType() {
+		return token_type;
+	}
 	
+	public String getData() {
+		return data;
+		
+	}
+	//gives token type and data associated to it
+	public String toString() {
+		
+		return "Type: "+token_type + " data: " + data;
+	}
 }
 }
