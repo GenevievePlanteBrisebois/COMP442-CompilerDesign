@@ -411,27 +411,60 @@ public boolean isCommentLine(String input) {
  * using the modules we created according to the lexical specification in order to do the tokenization.
  * */
 //lexer function
-public ArrayList <Token> lexer(String input) {
-	String in = input;
-	String part;
-	
+public ArrayList <Token> lexer(String input, int line) {
+	String part = "";
 	int len = input.length();
 	int marker = 0;
-	
+	int len_part;
 	while (marker<len) {
+	
+		
+		//get the first word/part of the input. a first round is done by looking at the spaces. 
+		for(int i= marker;i<len;i++) {
+			if(input.charAt(i) ==' ') {
+				break;
+			}
+			else {
+				part+=input.valueOf(input.charAt(i));
+				marker = i;
+			}
+		}
 		
 		
+		//put the marker at the index of the next char (the one following the part
 		
 		
-		
+		Token token = nextToken(part, line);
+		len_part = part.length();
+		//adjusting the marker
+		if(len_part >token.getData().length())
+		{
+			//reduce the marker since the token is smaller than the input
+			//will allow to do some backtracking as we will go back to where the marker is that it goes forward or backwards
+			int diff = len_part-token.getData().length(); 
+			marker = marker-diff;
+			
+			
+		}
+		tokens.add(token);
 		
 	}
-	
-	
+		
 	return tokens;
 }
 
 
+//will have to think about how to handle the comments
+
+//if ever the token is smaller than the input must write an error message to let the user know
+//there was ambiguity/error. 
+public Token nextToken(String input, int line) {
+	Token token;
+		
+		
+	return token;
+	
+}
 
 
 
