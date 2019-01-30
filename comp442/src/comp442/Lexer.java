@@ -4,7 +4,7 @@
  * */
 
 package comp442;
-
+import java.io.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,6 +37,8 @@ public class Lexer {
 	private static final String ALPHANUM_PATTERN = "[0,1,2,3,4,5,6,7,8,9]|[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]|[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]|_";
 	private static final String WHITESPACE_PATTERN = "\\s";
 	
+	
+	
 	//create the pattern objects for the set patterns:
 	Pattern keywords = Pattern.compile(KEYWORDS_PATTERN);
 	Pattern letter = Pattern.compile(LETTER_PATTERN);
@@ -47,6 +49,12 @@ public class Lexer {
 	//now that we have the most used pattern that are used as subunits in all other aspects of the
 	//lexer we will be able to use the matcher to see if it corresponds to their token definition
 	
+	//create the token types that are possible 
+	
+	public static enum TokenType{
+		LETTER, DIGIT, NONZERO, ALPHANUM, KEYWORD, INTEGER, FRACTION, FLOAT, PUNCTUATION, COMMENT, OPERATOR;
+		
+	}
 //ids if is a keyword token
 	/*
 	 * The input is a string which is the sequence to analyse. if the sequence of char 
@@ -402,32 +410,87 @@ public boolean isCommentLine(String input) {
  * now that we have the modules for the regular expressions we can look into gathering the input bits and 
  * using the modules we created according to the lexical specification in order to do the tokenization.
  * */
+//lexer function
+public ArrayList <Token> lexer(String input) {
+	String in = input;
+	String part;
+	
+	int len = input.length();
+	int marker = 0;
+	
+	while (marker<len) {
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	return tokens;
+}
 
 
 
+
+
+
+public String invalidNumber(String input) {
+	String message = "Invalid number : " + input;
+	
+	
+}
+
+
+/*
+ * nested class in order to keep track of the line at which we are at so that when there is an error 
+ * we can do to string and output where the error was. 
+ * */
+public class Location{
+	
+	int line;
+	
+	public Location(int line) {
+		this.line  = line;
+	}
+	public int getLine() {
+		return line;
+	}
+	
+	public String toString() {
+		return "Location line :" +line;
+	}
+}
 
 
 
 /*
  * a class to create the tokens. Tokens will have a type and a data associated to it. 
  * they are going to be used in the parent class in order to tokenize the input.
+ * 
+ * when a token does not have a value the data string should be the empty string
  * */
 
 public class Token{
 	String token_type;
 	String data;
-	
+	Location location;
 	public Token() {
 		token_type="";
 		data = "";
 		
 	}
 	
-	public Token(String type, String d) {
+	public Token(String type, String d, Location loc) {
 		token_type = type;
 		data =d;
+		location = loc;
 	}
-	
+	public int getLocation() {
+		
+		return location.getLine();
+	}
 	public String getType() {
 		return token_type;
 	}
@@ -439,7 +502,7 @@ public class Token{
 	//gives token type and data associated to it
 	public String toString() {
 		
-		return "Type: "+token_type + " data: " + data;
+		return "Type: "+token_type + " data: " + data + location.toString();
 	}
 }
 }
