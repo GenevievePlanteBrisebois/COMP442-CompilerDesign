@@ -1,5 +1,4 @@
-/*
- * program written by Genevieve Plante-Brisebois 40003112
+/* program written by Genevieve Plante-Brisebois 40003112
  * Written in the context of the COMP442 winter 2019
  * This class is to make the lexer which is the first step to the compiler.
  * */
@@ -36,12 +35,15 @@ public class Lexer {
 	private static final String DIGIT_PATTERN = "[0,1,2,3,4,5,6,7,8,9]";
 	private static final String NONZERO_PATTERN = "[1,2,3,4,5,6,7,8,9]";
 	private static final String ALPHANUM_PATTERN = "[0,1,2,3,4,5,6,7,8,9]|[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]|[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]|_";
+	private static final String WHITESPACE_PATTERN = "\\s";
+	
 	//create the pattern objects for the set patterns:
 	Pattern keywords = Pattern.compile(KEYWORDS_PATTERN);
 	Pattern letter = Pattern.compile(LETTER_PATTERN);
 	Pattern digit = Pattern.compile(DIGIT_PATTERN);
 	Pattern nonzero = Pattern.compile(NONZERO_PATTERN);
 	Pattern alphanum = Pattern.compile(ALPHANUM_PATTERN);
+	Pattern whitespace = Pattern.compile(WHITESPACE_PATTERN);
 	//now that we have the most used pattern that are used as subunits in all other aspects of the
 	//lexer we will be able to use the matcher to see if it corresponds to their token definition
 	
@@ -170,25 +172,54 @@ public boolean isFloat(String input){
 	if(isInteger(input)==true) {
 		return result;
 	}
+	
+	//if the input is a fraction it is automatically not a float
+	if (isFraction(input)==true)
+		return result;
+	//if the first char is a pointm even if not a fraction (see above test) then it means that the input is still invalid for the float token
+	
+	if (input.valueOf(input.charAt(0))==".")
+		return result;
 	//find where the . is and break the string into two new strings
 	//also test if there are multiple . and or e (which makes the string invalid)
+	//finds if there is an operator symbol in the string
 	int dot = 0;
 	int e = 0;
+	int plus =0;
+	int minus =0;
+	
+	/*
+	 * this is also testing to see if there is more than one occurance of a specific character. in the case that the character is
+	 * repeated, it automatically invalidates the input string as a token of type float. 
+	 * */
 	for (int i=0;i<length;i++) {
 		character =  input.valueOf(input.charAt(i));
-		if(character =="." && dot ==0 ) {
+		if(character =="." && dot ==0 ) 
 			dot =i;
-			
-			
-		}
 		else if (character == "." && dot !=0)
 			return result;
 		else if (character == "e" && e!=0)
 			return result;		
 		else if (character =="e" && e==0)
 			e = i;
+		else if (character == "+" && plus ==0)
+			plus=i;
+		else if (character =="-" && minus==0)
+			minus =i;
+		else if (character == "+" && plus !=0)
+			return result;
+		else if (character == "-" && minus!=0)
+			return result;
 	}
-		
+	//test for the placement of the + and - symbols
+	
+	
+	if(plus != 0 && e+1!= plus)
+		return result;
+	if(minus!=0 && e+1 != minus)
+		return result;
+	
+	
 	//now we have the index of the dot we can create the two strings
 	
 	String part1 = "";
@@ -210,7 +241,46 @@ public boolean isFloat(String input){
 	if (e==0) {
 		if(isFraction(part2)==false)
 			return result;		
-	}else if (e!=0) {
+	}
+	
+	else if (e!=0 && plus!=0) {
+		//make a part 3
+		
+		String part3 ="";
+		
+		for (int i=dot;i<e;i++) {
+			character =  input.valueOf(input.charAt(i));
+			part2+=character;
+		}
+		for (int i=e+2;i<length;i++) {
+			character =  input.valueOf(input.charAt(i));
+			part3+=character;
+		}
+		
+		if(isFraction(part2)==false)
+			return result;
+		if(isInteger(part3)==false)
+			return result;}
+	
+	else if (e!=0 && minus !=0) {
+		//make a part 3
+		
+		String part3 ="";
+		
+		for (int i=dot;i<e;i++) {
+			character =  input.valueOf(input.charAt(i));
+			part2+=character;
+		}
+		for (int i=e+1;i<length;i++) {
+			character =  input.valueOf(input.charAt(i));
+			part3+=character;
+		}
+		
+		if(isFraction(part2)==false)
+			return result;
+		if(isInteger(part3)==false)
+			return result;
+	}else if (e!=0 ) {
 		//make a part 3
 		
 		String part3 ="";
@@ -230,7 +300,7 @@ public boolean isFloat(String input){
 			return result;
 		
 	}
-	//still need to implement variation for the +- in the second section of the implementation. 
+		
 	result = true;	
 	
 	return result;
