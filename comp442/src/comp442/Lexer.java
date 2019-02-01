@@ -51,10 +51,7 @@ public class Lexer {
 	
 	//create the token types that are possible 
 	
-	public static enum TokenType{
-		LETTER, DIGIT, NONZERO, ALPHANUM, KEYWORD, INTEGER, FRACTION, FLOAT, PUNCTUATION, COMMENT, OPERATOR;
-		
-	}
+	
 //ids if is a keyword token
 	/*
 	 * The input is a string which is the sequence to analyse. if the sequence of char 
@@ -460,8 +457,8 @@ public ArrayList <Token> lexer(String input, int line) {
 //there was ambiguity/error. 
 public Token nextToken(String input, int line) {
 	Token token;
-		
-		
+		if(input.charAt(0)=='0')
+			token = new Token(INTEGER, )
 	return token;
 	
 }
@@ -469,11 +466,12 @@ public Token nextToken(String input, int line) {
 
 
 
-public String invalidNumber(String input) {
-	String message = "Invalid number : " + input;
-	
-	
-}
+//error messages methods
+
+/*
+ * on advice of prof not making special cases, just sending error message if tokens are not valid. 
+ * 
+ */
 
 
 /*
@@ -506,6 +504,10 @@ public class Location{
  * */
 
 public class Token{
+	public static enum TokenType{
+		 KEYWORD, INTEGER,  FLOAT, PUNCTUATION, COMMENT, OPERATOR;
+		
+	}
 	String token_type;
 	String data;
 	Location location;
