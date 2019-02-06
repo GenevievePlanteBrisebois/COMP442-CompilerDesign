@@ -1,0 +1,11 @@
+ID ID 
+ID 
+ID ID 
+integer ID integer punctuation integer 
+integer 
+ID integer punctuation integer punctuation 
+punctuation integer punctuation ID 
+integer 
+integer 
+integer 
+ID keyword ID punctuation 

@@ -1,0 +1,10 @@
+integer x = 13;
+/* this program is a test program */
+//will the lexer put out the tokens properly?
+integer y = 56;
+float b = 0.13e342;
+x = y + b;
+write if else //here are sample of id
+l
+s
+lek_nskasd dsak love live laugh 7_ska 

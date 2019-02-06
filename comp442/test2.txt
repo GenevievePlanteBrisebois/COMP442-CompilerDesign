@@ -1,0 +1,60 @@
+A a
+mi
+l9 n8
+9s 12.0354
+22
+Sf 12.02213.
+.32  .sf
+4
+768
+432
+Tests for alphanumerical:
+_ 
+Jkl
+09jk0)
+Tests for integers:
+09u
+0890
+890
+678756690   = 30673290
+0273470 + aslk
+0934sk
+Tests for floats:
+12.0
+12.0.
+12…
+12.2156-e13
+12.0e1565
+12.e12
+12.65e89
+12.0e0215
+12.sd20
+ 
+Tests for fractions:
+.023156
+0.2130
+.1235
+.sda
+Sads.123
+.55
+.5
+.98
+.0
+ 
+.0230
+ 
+Tests for punctuation:
+.
+\ :
+< dfev >
+< >
+! ?
+ 
+Asd.
+.asd
+:  ;
+ 
+Tests for comments:
+/*
+*/
+//
