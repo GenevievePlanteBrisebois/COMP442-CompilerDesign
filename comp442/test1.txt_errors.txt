@@ -1,0 +1,3 @@
+Token invalid. File: test1.txt content: ?Location line: Location line :2
+Token invalid. File: test1.txt content: 0Location line: Location line :4
+Token invalid. File: test1.txt content: _Location line: Location line :9

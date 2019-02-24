@@ -30,7 +30,7 @@ public class Lexer {
  * */	
 	
 	//strings that will be used to create the patterns. the patterns will be used in the functions. 
-	//the patterns take in regular expressions and then work with them. I am using the drfinitions 
+	//the patterns take in regular expressions and then work with them. I am using the definitions 
 	//from the lexical specifications. 
 	private static final String KEYWORDS_PATTERN = "if|then|else|for|integer|class|float|read|return|write|main"; 
 	private static final String LETTER_PATTERN ="[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]|[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]" ;
@@ -469,13 +469,15 @@ public ArrayList <Token> lexer(File input) {
 			//
 		while(isTrue) {
 			//verify is the part is a token
-			if(part.compareTo(" ")==0) {
+			if(part.compareTo(" ")==0 && marker!=char_line.length()-1) {
 				marker++;
 				part = String.valueOf(char_line.charAt(marker));
+			}else if (part.compareTo(" ")==0 && marker==char_line.length()-1) {
+				break;
 			}
 			is_token = isToken(part);
 			//ifnot a token, we verify up to 3 more chars (ex: floats might need up to 3 chars in order to be valid again
-			//moment it becomes valid again:ex add one mor and then valid then we go out of this mini loop n back to reality
+			//moment it becomes valid again:ex add one more and then valid then we go out of this mini loop n back to reality
 			if (marker<char_line.length()) {
 			if(is_token[0].compareTo("false")==0) {
 				String temp = part;
@@ -642,14 +644,15 @@ public ArrayList <Token> lexer(File input) {
 					String token_input = "";
 					String token_type = "comment";
 					
-					//getting the line to put in comment, as itmight not be at the bessinning of the line we use the marker as a way to pinpoint the begginning of the comment
+					//getting the line to put in comment, as itmight not be at the beginning of the line we use the marker as a way to pinpoint the begginning of the comment
 					
 					for (int i=index_start; i <char_line.length();i++) {
 						token_input+=String.valueOf(char_line.charAt(i));
 					}
 					
 					//int token_length = token_type.length();
-					
+					part=token_input;
+					marker=char_line.length()-1;
 					token = new Token("comment", token_input, loc);
 					//token stream to the output file
 					write_token.write(token_type);
@@ -685,6 +688,13 @@ public ArrayList <Token> lexer(File input) {
 				
 				//if ever the content is still not a valid token then we have an error
 				//output to console and output to external file
+				else if (is_token[0].compareTo("false")==0 && part.compareTo(" ")==0) {
+					break;					
+				}
+				
+				
+				
+				
 				else {
 					//write to file the error message
 					String errorM = "Token invalid. File: "+ inputName + " content: " + part + "Location line: " + loc;
@@ -741,7 +751,7 @@ public String [] comment_lexer(File input, Location loc, int marker) {
 	String line = reader.readLine();
 	int initial_loc = loc.getLine();
 	int counter_c =1;
-	int location = 0;
+	int location = loc.getLine();
 	String part = "";
 	//getme to the line in the file that we got the comment at
 	for (int i = 0;i<initial_loc;i++) {
@@ -754,30 +764,77 @@ public String [] comment_lexer(File input, Location loc, int marker) {
 	while(isTrue) {
 		String [] is_token;
 		boolean second_loop = true;
-		
+		part=String.valueOf(line.charAt(marker2));
+		int mark = marker2;
 		while(second_loop) {
 		
-		part+=String.valueOf(line.charAt(marker2));
-		is_token = isToken(part);
 		
-		if(is_token[0].compareTo("commentOpen")==0) {
-			marker++;
+		
+		//encouters of new open or close comment
+		
+		if (String.valueOf(line.charAt(mark)).compareTo("*")==0)
+		{
+			part = String.valueOf(line.charAt(mark));
+			part +=String.valueOf(line.charAt(mark+1));
+			mark++;
+		}
+		else if (String.valueOf(line.charAt(mark)).compareTo("/")==0){
+			part = String.valueOf(line.charAt(mark));
+			part +=String.valueOf(line.charAt(mark+1));
+			mark++;
+		}	
+		is_token = isToken(part);
+		//checking if the part is a token or not to open or close the comment section
+		if(is_token[1].compareTo("commentOpen")==0) {
+			mark++;
 			counter_c++;
-		}else if(is_token[0].compareTo("commentClose")==0) {
+		}
+		else if(is_token[1].compareTo("commentClose")==0) {
 			counter_c--;
-			marker++;
-		}else if (counter_c ==0) {
-			marker++;
+		}
+		if (counter_c ==0) {
+			mark++;
+			marker2=mark;
 			second_loop = false;
 			isTrue = false;
+			break;
 		}
 		
+		if(mark!=line.length()-1) {
+		mark++;
+		part+=String.valueOf(line.charAt(mark));
 		}
-		
+		}
+		if(mark== line.length()-1) {
 		line = reader.readLine();
 		location++;
+		}
 	}
 	
+	//go get the content of the comment now that we know when it starts (marker) and ends (marker2)
+	
+	isTrue=true;
+	int locationtemp=initial_loc;
+	int temp_marker=marker;
+	for (int i = 0;i<initial_loc;i++) {		
+		line = reader.readLine();
+	}
+	part=String.valueOf(line.charAt(temp_marker));
+	while(isTrue) {
+		if(temp_marker==marker2 && locationtemp==location) {
+			isTrue=false;
+		}
+		else if (temp_marker== line.length()-1) {
+			line = reader.readLine();
+			locationtemp++;
+			temp_marker=0;
+			part+=" ";
+		}else {
+		temp_marker++;
+		part+=String.valueOf(line.charAt(temp_marker));
+		
+		}
+	}
 	
 	
 	//int location = loc.getLine();
@@ -851,6 +908,8 @@ public String [] isToken(String input) {
 	}
 	//if not one of those two cases we enter in the realm of the punctionation, operator or comment 
 	else {
+		if(input.compareTo(" ") == 0)
+			return is_token;
 		if(isCommentBlockOpen(input)==true) {
 			is_token[0]="true";
 			is_token[1]="commentOpen";
@@ -893,76 +952,5 @@ public String [] isToken(String input) {
  * on advice of prof not making special cases, just sending error message if tokens are not valid. 
  * 
  */
-
-
-/*
- * nested class in order to keep track of the line at which we are at so that when there is an error 
- * we can do to string and output where the error was. 
- * */
-public class Location{
-	
-	int line;
-	
-	//default constructor
-	public  Location() {
-		line = 0;
-	}
-	public Location(int line) {
-		this.line  = line;
-	}
-	public int getLine() {
-		return line;
-	}
-	public void setLocation(int i) {
-		line = i;
-	}
-	public String toString() {
-		return "Location line :" +line;
-	}
-}
-
-
-
-/*
- * a class to create the tokens. Tokens will have a type and a data associated to it. 
- * they are going to be used in the parent class in order to tokenize the input.
- * 
- * when a token does not have a value the data string should be the empty string
- * */
-
-public class Token{
-	
-	String token_type;
-	String data;
-	Location location;
-	public Token() {
-		token_type="";
-		data = "";
-		
-	}
-	
-	public Token(String type, String d, Location loc) {
-		token_type = type;
-		data =d;
-		location = loc;
-	}
-	public int getLocation() {
-		
-		return location.getLine();
-	}
-	public String getType() {
-		return token_type;
-	}
-	
-	public String getData() {
-		return data;
-		
-	}
-	//gives token type and data associated to it
-	public String toString() {
-		
-		return "Type: "+token_type + " data: " + data + location.toString();
-	}
-}
 }
 

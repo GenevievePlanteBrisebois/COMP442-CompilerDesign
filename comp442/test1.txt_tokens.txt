@@ -1,1 +1,10 @@
 keyword ID operator integer punctuation 
+comment
+comment 
+keyword ID operator integer punctuation 
+keyword ID operator punctuation integer ID punctuation 
+ID operator ID operator ID punctuation 
+keyword keyword keyword comment ID 
+ID 
+ID 
+ID ID ID ID ID integer ID 

@@ -3,9 +3,62 @@ ID
 ID ID 
 integer ID integer punctuation integer 
 integer 
-ID integer punctuation integer punctuation 
-punctuation integer punctuation ID 
-integer 
+ID 
+punctuation integer 
+integer integer 
 integer 
 integer 
 ID keyword ID punctuation 
+
+ID 
+integer ID punctuation 
+ID keyword ID punctuation 
+integer ID 
+integer 
+integer 
+integer 
+integer 
+integer 
+ID 
+integer ID 
+ID keyword ID punctuation 
+integer punctuation 
+integer punctuation integer 
+integer punctuation punctuation 
+integer punctuation integer punctuation 
+integer 
+float operator ID 
+integer punctuation ID 
+integer punctuation ID 
+float ID 
+integer punctuation ID 
+integer punctuation ID 
+
+ID keyword ID punctuation 
+punctuation integer 
+punctuation integer 
+punctuation integer 
+punctuation ID 
+ID punctuation integer 
+punctuation integer 
+punctuation integer 
+punctuation integer 
+punctuation 
+
+punctuation integer 
+
+ID keyword ID punctuation 
+punctuation 
+punctuation 
+operator ID operator 
+operator operator 
+operator 
+
+ID punctuation 
+punctuation ID 
+punctuation 
+
+ID keyword ID punctuation 
+operator 
+operator 
+operator 

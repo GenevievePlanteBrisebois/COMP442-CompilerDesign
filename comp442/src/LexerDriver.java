@@ -5,7 +5,10 @@
  * */
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+
 
 
 public class LexerDriver {
@@ -19,7 +22,7 @@ public class LexerDriver {
 	 try {
 	 while(keepGoing) {
 		 input = scan.next();
-		 
+		 ArrayList <Token> tokens = new ArrayList<Token> (5);
 		 File file = new File (input);
 		 lex.lexer(file);
 		 System.out.println("lexer done. look in your files. \n");

@@ -3,25 +3,29 @@ mi
 l9 n8
 9s 12.0354
 22
-Sf 12.02213.
+Sf
 .32  .sf
-4
+4 12…
 768
 432
 Tests for alphanumerical:
 _ 
 Jkl
-09jk0)
+09jk0) 
 Tests for integers:
 09u
 0890
 890
-678756690   = 30673290
-0273470 + aslk
+678756690
+30673290
+0273470
+aslk
 0934sk
 Tests for floats:
 12.0
+12.0354
 12.0.
+12.02213.
 12…
 12.2156-e13
 12.0e1565
