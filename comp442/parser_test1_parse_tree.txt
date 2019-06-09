@@ -1,0 +1,271 @@
+
+Parent data: None Current node token: None Production: prog
+ Children: 
+Parent data: progProduction: classDeclarations
+ Children: 
+Parent data: classDeclarationsProduction: classDecl
+ Children: 
+Parent data: classDecl Current node token: Type: keyword data: class Location line :15Production: terminal
+ Children: 
+Parent data: classDecl Current node token: Type: id data: hello Location line :15Production: terminal
+ Children: 
+Parent data: classDecl Current node token: Type: punctuation data: { Location line :15Production: terminal
+ Children: 
+Parent data: classDeclProduction: varDecl
+ Children: 
+Parent data: varDeclProduction: type
+ Children: 
+Parent data: type Current node token: Type: id data: id Location line :15Production: terminal
+ Children: 
+Parent data: varDecl Current node token: Type: id data: a Location line :15Production: terminal
+ Children: 
+Parent data: varDeclProduction: arraySize
+ Children: 
+Parent data: arraySize Current node token: Type: punctuation data: [ Location line :15Production: terminal
+ Children: 
+Parent data: arraySize Current node token: Type: integer data: 2 Location line :15Production: terminal
+ Children: 
+Parent data: arraySize Current node token: Type: punctuation data: ] Location line :15Production: terminal
+ Children: 
+Parent data: varDecl Current node token: Type: punctuation data: ; Location line :15Production: terminal
+ Children: 
+Parent data: classDeclProduction: varDecl
+ Children: 
+Parent data: varDeclProduction: type
+ Children: 
+Parent data: type Current node token: Type: keyword data: integer Location line :15Production: terminal
+ Children: 
+Parent data: varDecl Current node token: Type: id data: x Location line :15Production: terminal
+ Children: 
+Parent data: varDecl Current node token: Type: punctuation data: ; Location line :15Production: terminal
+ Children: 
+Parent data: classDecl Current node token: Type: punctuation data: } Location line :15Production: terminal
+ Children: 
+Parent data: progProduction: functions
+ Children: 
+Parent data: functionsProduction: funcDef
+ Children: 
+Parent data: funcDefProduction: funcHead
+ Children: 
+Parent data: funcHeadProduction: type
+ Children: 
+Parent data: funcHead Current node token: Type: id data: test Location line :15Production: terminal
+ Children: 
+Parent data: funcHead Current node token: Type: punctuation data: ( Location line :15Production: terminal
+ Children: 
+Parent data: funcHeadProduction: fParams
+ Children: 
+Parent data: fParamsProduction: type
+ Children: 
+Parent data: type Current node token: Type: keyword data: integer Location line :15Production: terminal
+ Children: 
+Parent data: funcHead Current node token: Type: punctuation data: ) Location line :15Production: terminal
+ Children: 
+Parent data: funcDefProduction: funcBody
+ Children: 
+Parent data: funcBody Current node token: Type: punctuation data: { Location line :15Production: terminal
+ Children: 
+Parent data: funcBodyProduction: statement
+ Children: 
+Parent data: statementProduction: assignStat
+ Children: 
+Parent data: assignStatProduction: variable
+ Children: 
+Parent data: variable Current node token: Type: id data: x Location line :15Production: terminal
+ Children: 
+Parent data: assignStatProduction: assignOp
+ Children: 
+Parent data: assignOp Current node token: Type: operator data: = Location line :15Production: terminal
+ Children: 
+Parent data: assignStatProduction: expr
+ Children: 
+Parent data: exprProduction: arithExpr
+ Children: 
+Parent data: arithExprProduction: term
+ Children: 
+Parent data: termProduction: factor
+ Children: 
+Parent data: factor Current node token: Type: integer data: 13 Location line :15Production: terminal
+ Children: 
+Parent data: arithExprProduction: arithExprTail
+ Children: 
+Parent data: arithExprTailProduction: addOP
+ Children: 
+Parent data: addOP Current node token: Type: operator data: + Location line :15Production: terminal
+ Children: 
+Parent data: arithExprTailProduction: term
+ Children: 
+Parent data: termProduction: factor
+ Children: 
+Parent data: factorProduction: factorTail
+ Children: 
+Parent data: factorTail Current node token: Type: id data: x Location line :15Production: terminal
+ Children: 
+Parent data: factorTailProduction: factorTailTail
+ Children: 
+Parent data: arithExprTailProduction: arithExprTail
+ Children: 
+Parent data: statement Current node token: Type: punctuation data: ; Location line :15Production: terminal
+ Children: 
+Parent data: funcBodyProduction: statement
+ Children: 
+Parent data: statement Current node token: Type: keyword data: return Location line :15Production: terminal
+ Children: 
+Parent data: statement Current node token: Type: punctuation data: ( Location line :15Production: terminal
+ Children: 
+Parent data: statementProduction: expr
+ Children: 
+Parent data: exprProduction: arithExpr
+ Children: 
+Parent data: arithExprProduction: term
+ Children: 
+Parent data: termProduction: factor
+ Children: 
+Parent data: factorProduction: factorTail
+ Children: 
+Parent data: factorTail Current node token: Type: id data: x Location line :15Production: terminal
+ Children: 
+Parent data: factorTailProduction: factorTailTail
+ Children: 
+Parent data: arithExprProduction: arithExprTail
+ Children: 
+Parent data: statement Current node token: Type: id data: x Location line :15Production: terminal
+ Children: 
+Parent data: statement Current node token: Type: punctuation data: ; Location line :15Production: terminal
+ Children: 
+Parent data: funcBody Current node token: Type: punctuation data: } Location line :15Production: terminal
+ Children: 
+Parent data: funcDef Current node token: Type: punctuation data: ; Location line :15Production: terminal
+ Children: 
+Parent data: prog Current node token: Type: keyword data: main Location line :15Production: terminal
+ Children: 
+Parent data: progProduction: funcBody
+ Children: 
+Parent data: funcBody Current node token: Type: punctuation data: { Location line :15Production: terminal
+ Children: 
+Parent data: funcBodyProduction: varDecl
+ Children: 
+Parent data: varDeclProduction: type
+ Children: 
+Parent data: type Current node token: Type: keyword data: integer Location line :15Production: terminal
+ Children: 
+Parent data: varDecl Current node token: Type: id data: y Location line :15Production: terminal
+ Children: 
+Parent data: varDecl Current node token: Type: punctuation data: ; Location line :15Production: terminal
+ Children: 
+Parent data: funcBodyProduction: varDecl
+ Children: 
+Parent data: varDeclProduction: type
+ Children: 
+Parent data: type Current node token: Type: keyword data: integer Location line :15Production: terminal
+ Children: 
+Parent data: varDecl Current node token: Type: id data: x Location line :15Production: terminal
+ Children: 
+Parent data: varDecl Current node token: Type: punctuation data: ; Location line :15Production: terminal
+ Children: 
+Parent data: funcBodyProduction: varDecl
+ Children: 
+Parent data: varDeclProduction: type
+ Children: 
+Parent data: type Current node token: Type: id data: id Location line :15Production: terminal
+ Children: 
+Parent data: varDecl Current node token: Type: id data: hello Location line :15Production: terminal
+ Children: 
+Parent data: varDecl Current node token: Type: punctuation data: ; Location line :15Production: terminal
+ Children: 
+Parent data: funcBodyProduction: statement
+ Children: 
+Parent data: statementProduction: assignStat
+ Children: 
+Parent data: assignStatProduction: variable
+ Children: 
+Parent data: variable Current node token: Type: id data: x Location line :15Production: terminal
+ Children: 
+Parent data: assignStatProduction: assignOp
+ Children: 
+Parent data: assignOp Current node token: Type: operator data: = Location line :15Production: terminal
+ Children: 
+Parent data: assignStatProduction: expr
+ Children: 
+Parent data: exprProduction: arithExpr
+ Children: 
+Parent data: arithExprProduction: term
+ Children: 
+Parent data: termProduction: factor
+ Children: 
+Parent data: factorProduction: factorTail
+ Children: 
+Parent data: factorTail Current node token: Type: id data: test Location line :15Production: terminal
+ Children: 
+Parent data: factorTailProduction: factorTailTail
+ Children: 
+Parent data: factorTailTailProduction: aParams
+ Children: 
+Parent data: aParamsProduction: expr
+ Children: 
+Parent data: exprProduction: arithExpr
+ Children: 
+Parent data: arithExprProduction: term
+ Children: 
+Parent data: termProduction: factor
+ Children: 
+Parent data: factor Current node token: Type: integer data: 20 Location line :15Production: terminal
+ Children: 
+Parent data: arithExprProduction: arithExprTail
+ Children: 
+Parent data: factorTailTail Current node token: Type: punctuation data: ) Location line :15Production: terminal
+ Children: 
+Parent data: arithExprProduction: arithExprTail
+ Children: 
+Parent data: statement Current node token: Type: punctuation data: ; Location line :15Production: terminal
+ Children: 
+Parent data: funcBodyProduction: statement
+ Children: 
+Parent data: statementProduction: assignStat
+ Children: 
+Parent data: assignStatProduction: variable
+ Children: 
+Parent data: variable Current node token: Type: id data: a Location line :15Production: terminal
+ Children: 
+Parent data: variableProduction: indice
+ Children: 
+Parent data: indice Current node token: Type: punctuation data: [ Location line :15Production: terminal
+ Children: 
+Parent data: indiceProduction: arithExpr
+ Children: 
+Parent data: arithExprProduction: term
+ Children: 
+Parent data: termProduction: factor
+ Children: 
+Parent data: factor Current node token: Type: integer data: 0 Location line :15Production: terminal
+ Children: 
+Parent data: arithExprProduction: arithExprTail
+ Children: 
+Parent data: indice Current node token: Type: punctuation data: ] Location line :15Production: terminal
+ Children: 
+Parent data: assignStatProduction: assignOp
+ Children: 
+Parent data: assignOp Current node token: Type: operator data: = Location line :15Production: terminal
+ Children: 
+Parent data: assignStatProduction: expr
+ Children: 
+Parent data: exprProduction: arithExpr
+ Children: 
+Parent data: arithExprProduction: term
+ Children: 
+Parent data: termProduction: factor
+ Children: 
+Parent data: factorProduction: factorTail
+ Children: 
+Parent data: factorTail Current node token: Type: id data: hello Location line :15Production: terminal
+ Children: 
+Parent data: factorTailProduction: factorTailTail
+ Children: 
+Parent data: arithExprProduction: arithExprTail
+ Children: 
+Parent data: statement Current node token: Type: punctuation data: ; Location line :15Production: terminal
+ Children: 
+Parent data: funcBody Current node token: Type: punctuation data: } Location line :15Production: terminal
+ Children: 
+Parent data: prog Current node token: Type: punctuation data: ; Location line :15Production: terminal
+ Children: 

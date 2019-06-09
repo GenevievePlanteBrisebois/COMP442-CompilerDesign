@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class Lexer {
 	
 	//tokens will be stored in an arraylist. tokens consist of type and data
-	ArrayList <Token> tokens = new ArrayList <Token>(20);
+	ArrayList <Token> tokens = new ArrayList <Token>();
 /*
  * This section of the program is going to be functions that verify if the tokens are of a 
  * certain type.  * the value returned by the functions will be a boolean. In the case the
@@ -36,7 +36,7 @@ public class Lexer {
 	private static final String LETTER_PATTERN ="[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]|[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]" ;
 	private static final String DIGIT_PATTERN = "[0,1,2,3,4,5,6,7,8,9]";
 	private static final String NONZERO_PATTERN = "[1,2,3,4,5,6,7,8,9]";
-	private static final String ALPHANUM_PATTERN = "[0,1,2,3,4,5,6,7,8,9]|[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]|[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]|_";
+	private static final String ALPHANUM_PATTERN = "[0,1,2,3,4,5,6,7,8,9]|[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]|[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]|\"_\"";
 	private static final String WHITESPACE_PATTERN = "\\s";
 	
 	//public static enum TokenType{
@@ -127,6 +127,10 @@ public boolean isInteger(String input){
 	boolean result=false;
 	int length = input.length();
 	String character;
+	if(input.compareTo("0")==0) {
+		result = true;
+		return result;
+	}
 	for (int i=0;i<length;i++) {
 		character = String.valueOf(input.charAt(i));
 		
@@ -153,7 +157,7 @@ public boolean isFraction(String input){
 		if(i==0 && character.compareTo(".") != 0) {
 			return result;			
 		}
-		else if (input == ".0") {
+		else if (input.compareTo(".0")==0) {
 			result = true;
 			return result;
 		}
@@ -246,7 +250,7 @@ public boolean isFloat(String input){
 	}
 	
 	//verify if the part1 is an integer
-	if(isInteger(part1)==false)
+	if(isInteger(part1)==false)	
 		return result;
 	
 	if (e==0) {
@@ -322,6 +326,8 @@ public boolean isAlphanum(String input){
 boolean result=false;
 	Matcher alphanum_match = alphanum.matcher(input);
 	result = alphanum_match.matches();	
+	if(input.compareTo("_")==0)
+		result = true;
 	return result;
 }
 
@@ -356,11 +362,11 @@ public boolean isPunctuation(String input){
 	if (length >2)
 		return result;
 	//make an exhaustive list of the punctuation markers
-	else if(input.compareTo(";") !=0&&input.compareTo(":") !=0&&input.compareTo("::") !=0&&input.compareTo(".") !=0&&input.compareTo(",") !=0&&input.compareTo("(") !=0&&input.compareTo(")") !=0&&input.compareTo(")") !=0&&input.compareTo("]") !=0&&input.compareTo("{") !=0&&input.compareTo("}") !=0) {
+	else if(input.compareTo(";") !=0&&input.compareTo(":") !=0&&input.compareTo("::") !=0&&input.compareTo(".") !=0&&input.compareTo(",") !=0&&input.compareTo("(") !=0&&input.compareTo(")") !=0&&input.compareTo("[") !=0&&input.compareTo("]") !=0&&input.compareTo("{") !=0&&input.compareTo("}") !=0) {
 	return result;
 	}
 	//if still in function we passed the test
-	else if(input.compareTo(";") ==0||input.compareTo(":") ==0||input.compareTo("::") ==0||input.compareTo(".") ==0||input.compareTo(",") ==0||input.compareTo("(") ==0||input.compareTo(")") ==0||input.compareTo(")") ==0||input.compareTo("]") ==0||input.compareTo("{") ==0||input.compareTo("}") ==0) {
+	else if(input.compareTo(";") ==0||input.compareTo(":") ==0||input.compareTo("::") ==0||input.compareTo(".") ==0||input.compareTo(",") ==0||input.compareTo("(") ==0||input.compareTo(")") ==0||input.compareTo("[") ==0||input.compareTo("]") ==0||input.compareTo("{") ==0||input.compareTo("}") ==0) {
 		result = true;	
 		return result;
 		}else
@@ -426,20 +432,23 @@ public boolean isCommentLine(String input) {
 //lexer function
 public ArrayList <Token> lexer(File input) {
 	BufferedReader reader;
-	BufferedWriter write_token;
+	BufferedWriter write_AtoCC;
 	BufferedWriter write_error;
+	BufferedWriter write_token;
 	try {
 		
 		//setting the input and output Files for the process and opening the streams for input andoutput. 
 		String inputName = input.getName();
-		String tokenOutputFileName = inputName + "_tokens.txt";
+		String AtoCCOutputFileName = inputName + "_AtoCC.txt";
 		String errorOutputFileName = inputName + "_errors.txt";
-		File tokenOutput = new File(tokenOutputFileName);
+		String tokenOutputFileName = inputName + "_tokens.txt";
+		File AtoCCOutput = new File(AtoCCOutputFileName);
 		File errorOutput = new File(errorOutputFileName);
+		File tokenOutput = new File(tokenOutputFileName);
 		reader = new BufferedReader(new FileReader(input));
-		write_token = new BufferedWriter(new FileWriter(tokenOutput));
+		write_AtoCC = new BufferedWriter(new FileWriter(AtoCCOutput));
 		write_error = new BufferedWriter(new FileWriter (errorOutput));
-		
+		write_token = new BufferedWriter(new FileWriter(tokenOutput));
 		
 		
 		
@@ -476,12 +485,16 @@ public ArrayList <Token> lexer(File input) {
 				break;
 			}
 			is_token = isToken(part);
+			
+			
 			//ifnot a token, we verify up to 3 more chars (ex: floats might need up to 3 chars in order to be valid again
 			//moment it becomes valid again:ex add one more and then valid then we go out of this mini loop n back to reality
-			if (marker<char_line.length()) {
-			if(is_token[0].compareTo("false")==0) {
+			if (marker<char_line.length() && is_token[0].compareTo("false")==0) {
+			//if(is_token[0].compareTo("false")==0) {
 				String temp = part;
-				if (marker<char_line.length()) {
+			//	if (marker<char_line.length()) {
+					//checking if adding something, up to 3 char brings the token back into a valid state or if it remains false
+					//if it remains false after three tokens it means the token is done, but if the token can be made valid, then the token is not done yet
 				for (int i=0;i<3;i++) {
 					if(marker!=char_line.length()-1) {
 						String el = String.valueOf(char_line.charAt(marker+1));
@@ -510,15 +523,15 @@ public ArrayList <Token> lexer(File input) {
 						break;
 					}
 					marker++;
+				//end for loop
 				}
 				
-				}
+				//}
 				
-				}
+				//}
 					//if its the end of the line and the token is not valid it will not enter the loop so that means there will 
 				//be an error message displayed later. 
-				
-				
+		
 			}
 			if(isTrue==false)
 				break;
@@ -538,9 +551,6 @@ public ArrayList <Token> lexer(File input) {
 		//we maintain the marker at its current position because the next part will start at this index.
 		//now we must take out the last char that we added to the part since it is the part that made the token invalid
 		
-		
-				
-				
 				
 				//now that we exited the loop it means that we need to take away one char from the part and then create the token
 				String temp = "";
@@ -572,23 +582,29 @@ public ArrayList <Token> lexer(File input) {
 					String token_type = "punctuation";
 					
 					token = new Token(token_type, part, loc);
-					write_token.write(token_type );
+					write_token.write(token.toString());
 					write_token.flush();
-					write_token.write(" ");
-					write_token.flush();
+					write_token.newLine();
+					write_AtoCC.write(token_type );
+					write_AtoCC.flush();
+					write_AtoCC.write(" ");
+					write_AtoCC.flush();
 					tokens.add(token);
 					
 					
 				}else if (is_token[1].compareTo("ID")==0) {
 					//int length = part.length();
 					//int index=0;
-					String token_type = "ID";
+					String token_type = "id";
 					
 					token = new Token(token_type, part, loc);
-					write_token.write(token_type);
+					write_token.write(token.toString());
 					write_token.flush();
-					write_token.write(" ");
-					write_token.flush();
+					write_token.newLine();
+					write_AtoCC.write(token_type);
+					write_AtoCC.flush();
+					write_AtoCC.write(" ");
+					write_AtoCC.flush();
 					tokens.add(token);
 				}else if (is_token[1].compareTo("keyword")==0) {
 					//int length = part.length();
@@ -596,10 +612,13 @@ public ArrayList <Token> lexer(File input) {
 					String token_type = "keyword";
 					
 					token = new Token (token_type, part, loc);
-					write_token.write(token_type);
+					write_token.write(token.toString());
 					write_token.flush();
-					write_token.write(" ");
-					write_token.flush();
+					write_token.newLine();
+					write_AtoCC.write(token_type);
+					write_AtoCC.flush();
+					write_AtoCC.write(" ");
+					write_AtoCC.flush();
 					tokens.add(token);
 					int x=0;
 					x=x+x;
@@ -609,9 +628,12 @@ public ArrayList <Token> lexer(File input) {
 					String token_type = "float";
 					
 					token = new Token(token_type, part, loc);
-					write_token.write(token_type);
-					write_token.write(" ");
+					write_token.write(token.toString());
 					write_token.flush();
+					write_token.newLine();
+					write_AtoCC.write(token_type);
+					write_AtoCC.write(" ");
+					write_AtoCC.flush();
 					tokens.add(token);
 				}else if (is_token[1].compareTo("integer")==0) {
 					//int length = part.length();
@@ -619,10 +641,13 @@ public ArrayList <Token> lexer(File input) {
 					String token_type = "integer";
 					
 					token = new Token(token_type, part, loc);
-					write_token.write(token_type);
+					write_token.write(token.toString());
 					write_token.flush();
-					write_token.write(" ");
-					write_token.flush();
+					write_token.newLine();
+					write_AtoCC.write(token_type);
+					write_AtoCC.flush();
+					write_AtoCC.write(" ");
+					write_AtoCC.flush();
 					tokens.add(token);
 				}else if (is_token[1].compareTo("operator")==0) {
 					//int length = part.length();
@@ -630,10 +655,13 @@ public ArrayList <Token> lexer(File input) {
 					String token_type = "operator";
 					
 					token = new Token(token_type, part,loc);
-					write_token.write(token_type);
+					write_token.write(token.toString());
 					write_token.flush();
-					write_token.write(" ");
-					write_token.flush();
+					write_token.newLine();
+					write_AtoCC.write(token_type);
+					write_AtoCC.flush();
+					write_AtoCC.write(" ");
+					write_AtoCC.flush();
 					tokens.add(token);
 				}
 				// we have to get the rest of the line and put it in the comment and output to file
@@ -654,9 +682,12 @@ public ArrayList <Token> lexer(File input) {
 					part=token_input;
 					marker=char_line.length()-1;
 					token = new Token("comment", token_input, loc);
+					write_token.write(token.toString());
+					write_token.flush();
+					write_token.newLine();
 					//token stream to the output file
-					write_token.write(token_type);
-					write_token.write(" ");
+					write_AtoCC.write(token_type);
+					write_AtoCC.write(" ");
 					write_error.flush();
 					tokens.add(token);
 				}
@@ -680,8 +711,11 @@ public ArrayList <Token> lexer(File input) {
 							part = com[2];
 							
 							token =  new Token ("comment", part, loc);
+							write_token.write(token.toString());
+							write_token.flush();
+							write_token.newLine();
 							tokens.add(token);
-							write_token.write("comment");
+							write_AtoCC.write("comment");
 							write_error.flush();
 						}					
 				}
@@ -694,13 +728,10 @@ public ArrayList <Token> lexer(File input) {
 				
 				
 				
-				
+				//write to file the error message
 				else {
-					//write to file the error message
-					String errorM = "Token invalid. File: "+ inputName + " content: " + part + "Location line: " + loc;
-
+					String errorM = "Token invalid. File: "+ inputName + " content: " + part + " " + loc;
 					System.out.println(errorM);
-					
 					write_error.write(errorM);
 					write_error.flush();
 					write_error.newLine();
@@ -716,13 +747,14 @@ public ArrayList <Token> lexer(File input) {
 		marker=0;
 		char_line = reader.readLine();
 		//go to a new line in the token stream
-		write_token.newLine();
+		write_AtoCC.newLine();
 		
 		}
 		//closing the readers/writers	
 		reader.close();
-		write_token.close();
+		write_AtoCC.close();
 		write_error.close();
+		write_token.close();
 	}
 	catch(Exception e) {
 		System.out.println(e);
@@ -944,13 +976,5 @@ public String [] isToken(String input) {
 }
 
 
-
-
-//error messages methods
-
-/*
- * on advice of prof not making special cases, just sending error message if tokens are not valid. 
- * 
- */
 }
 

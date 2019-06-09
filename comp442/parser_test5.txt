@@ -1,0 +1,19 @@
+class sunshine{
+integer test (integer x){
+x=13+x;
+return (x);
+};
+};
+class hello:sunshine{
+integer x ;
+};
+integer test (integer x){
+x=13+x;
+return (x);
+};
+main{
+integer y;
+integer x;
+y=20;
+x = y/2+6;
+};

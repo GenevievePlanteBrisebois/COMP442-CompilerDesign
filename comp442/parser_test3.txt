@@ -1,0 +1,9 @@
+class trip{
+integer punta_cana;
+};
+class water:trip(integer c){
+float x;
+};
+main{
+float hotel;
+};

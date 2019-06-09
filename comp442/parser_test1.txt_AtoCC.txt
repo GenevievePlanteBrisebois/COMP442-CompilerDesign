@@ -1,0 +1,15 @@
+keyword id punctuation 
+id id punctuation integer punctuation punctuation 
+keyword id punctuation 
+punctuation punctuation 
+keyword id punctuation keyword id punctuation punctuation 
+id operator integer operator id punctuation 
+keyword punctuation id punctuation punctuation 
+punctuation punctuation 
+keyword punctuation 
+keyword id punctuation 
+keyword id punctuation 
+id id punctuation 
+id operator id punctuation integer punctuation punctuation 
+id punctuation integer punctuation operator id punctuation 
+punctuation punctuation 

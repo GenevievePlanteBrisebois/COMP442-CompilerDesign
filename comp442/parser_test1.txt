@@ -1,0 +1,15 @@
+class hello{
+id a [2];
+integer x ;
+};
+integer test (integer x){
+x=13+x;
+return (x);
+};
+main{
+integer y;
+integer x;
+id hello;
+x = test(20);
+a[0]=hello;
+};

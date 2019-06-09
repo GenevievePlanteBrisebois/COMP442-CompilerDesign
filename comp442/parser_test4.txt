@@ -1,0 +1,14 @@
+class hello{
+float bla;
+};
+class sunshine:hello{
+integer b;
+};
+main{
+integer x;
+integer y;
+integer z;
+x=2;
+y=3;
+z=x+3;
+};

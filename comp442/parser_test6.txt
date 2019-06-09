@@ -1,0 +1,9 @@
+main{
+integer a[2][2];
+integer b[2];
+integer x;
+integer y;
+x=1;
+y=1;
+a.b.c[1]=1;
+};
